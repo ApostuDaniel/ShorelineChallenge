@@ -6,17 +6,28 @@ using System.Threading.Tasks;
 
 namespace ShorelineChallenge
 {
-    class User
+    public class User
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public List<int> Friends { get; set; }
+        private int id;
+        public int Id {
+            get => id;
+            set {
+                if (value < 0) throw new ArgumentException("Id can't be smaller than 0");
+                id = value;
+            } }
+        private string name;
+        public string Name { get => name;
+            set {
+                name = value ?? throw new ArgumentNullException(nameof(value));
+            } }
+
+        public HashSet<int> Friends { get;}
 
         public User(int id, string name)
         {
             Id = id;
             Name = name;
-            Friends = new List<int>();
+            Friends = new();
         }
 
         // override object.Equals
@@ -40,7 +51,5 @@ namespace ShorelineChallenge
         {
             return Id + " : " + Name;
         }
-
-
     }
 }
